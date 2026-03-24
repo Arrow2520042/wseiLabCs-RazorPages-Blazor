@@ -1,0 +1,70 @@
+@WebApi_HostAddress = http://localhost:5058
+
+### Pobierz wszystkie osoby (stronicowanie)
+GET {{WebApi_HostAddress}}/api/contacts?page=1&size=20
+Accept: application/json
+
+###
+
+### Pobierz osobę po id (wstaw znany guid)
+GET {{WebApi_HostAddress}}/api/contacts/2fa4ea0f-4f53-4e49-89da-bc4db57dc57f
+Accept: application/json
+
+###
+
+### Dodaj nową osobę (poprawne dane)
+POST {{WebApi_HostAddress}}/api/contacts
+Content-Type: application/json
+
+{
+  "firstName": "Sebastian",
+  "lastName": "Kurek",
+  "email": "sebastian.kurek@wsei.edu.pl",
+  "phone": "+48 666 123 987",
+  "gender": 0
+}
+
+###
+
+### Dodaj nową osobę (błędne dane — brak email i phone)
+POST {{WebApi_HostAddress}}/api/contacts
+Content-Type: application/json
+
+{
+  "firstName": "Adam",
+  "lastName": "Nowak"
+}
+
+###
+
+### Edytuj osobę (wstaw znany guid)
+PUT {{WebApi_HostAddress}}/api/contacts/2fa4ea0f-4f53-4e49-89da-bc4db57dc57f
+Content-Type: application/json
+
+{
+  "firstName": "Kacper",
+  "lastName": "Wroblewski",
+  "email": "kacper.wroblewski@wsei.edu.pl",
+  "phone": "+48 600 700 800"
+}
+
+###
+
+### Usuń osobę (wstaw znany guid)
+DELETE {{WebApi_HostAddress}}/api/contacts/aaf31a7c-d6c5-4c38-a845-dcbfdaf95af4
+
+###
+
+### Dodaj tag do osoby (wstaw znany guid)
+POST {{WebApi_HostAddress}}/api/contacts/25f35276-a294-4d9e-b431-812afca7ba65/tags
+Content-Type: application/json
+
+"vip"
+
+###
+
+### Dodaj notatkę do osoby (wstaw znany guid)
+POST {{WebApi_HostAddress}}/api/contacts/3d4f9239-3586-433a-bee0-a0858634f8f8/notes
+Content-Type: application/json
+
+"Klient premium, kontakt w sprawie zamówienia #1234"
