@@ -29,6 +29,7 @@ public record PersonDto : ContactBaseDto
         EmployerName = person.Employer?.Name,
         Status = person.Status,
         Tags = person.Tags,
+        Notes = person.Notes.Select(NoteDto.FromEntity).ToList(),
         CreatedAt = person.CreatedAt,
         Address = person.Address is not null ? AddressDto.FromEntity(person.Address) : null
     };

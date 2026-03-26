@@ -28,5 +28,10 @@ public class ContactsMappingProfile : Profile
 
         CreateMap<UpdatePersonDto, Person>()
             .ForAllMembers(opt => opt.Condition((src, dest, srcMember) => srcMember != null));
+
+        CreateMap<Note, NoteDto>();
+        CreateMap<CreateNoteDto, Note>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(_ => Guid.NewGuid()))
+            .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(_ => DateTime.UtcNow));
     }
 }

@@ -6,6 +6,7 @@ using FluentValidation.AspNetCore;
 using Infrastructure.Memory;
 using Infrastructure.Memory.Repositories;
 using Infrastructure.Services;
+using BackendLab01.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +26,8 @@ builder.Services.AddSingleton<IContactUnitOfWork, MemoryContactUnitOfWork>();
 builder.Services.AddSingleton<IPersonService, MemoryPersonService>();
 
 var app = builder.Build();
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 if (!app.Environment.IsDevelopment())
 {

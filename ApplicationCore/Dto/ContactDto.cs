@@ -10,6 +10,7 @@ public abstract record ContactBaseDto
     public AddressDto? Address { get; init; }
     public ContactStatus Status { get; init; }
     public List<string> Tags { get; init; } = new();
+    public List<NoteDto> Notes { get; init; } = new();
     public DateTime CreatedAt { get; init; }
 }
 
