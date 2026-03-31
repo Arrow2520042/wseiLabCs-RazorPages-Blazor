@@ -15,7 +15,7 @@ public static class ContactsModule
     {
         services.AddValidatorsFromAssemblyContaining<CreatePersonDtoValidator>();
         services.AddFluentValidationAutoValidation();
-        services.AddAutoMapper(typeof(ContactsMappingProfile).Assembly);
+        services.AddAutoMapper(cfg => cfg.AddProfile<ContactsMappingProfile>());
         return services;
     }
 }
