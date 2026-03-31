@@ -96,31 +96,31 @@ public class ContactsController : ControllerBase
         return NoContent();
     }
 
-    [HttpPost("{id:guid}/notes")]
+    [HttpPost("{contactId:guid}/notes")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> AddNote(Guid id, [FromBody] CreateNoteDto dto)
+    public async Task<IActionResult> AddNote([FromRoute] Guid contactId, [FromBody] CreateNoteDto dto)
     {
-        var note = await _service.AddNoteToPerson(id, dto);
-        return CreatedAtAction(nameof(GetNotes), new { id }, note);
+        var note = await _service.AddNoteToPerson(contactId, dto);
+        return CreatedAtAction(nameof(GetNotes), new { contactId }, note);
     }
 
-    [HttpGet("{id:guid}/notes")]
+    [HttpGet("{contactId:guid}/notes")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetNotes(Guid id)
+    public async Task<IActionResult> GetNotes([FromRoute] Guid contactId)
     {
-        var notes = await _service.GetNotes(id);
-        return Ok(notes);
+        var person = await _service.GetPerson(contactId);
+        return Ok(person.Notes);
     }
 
-    [HttpDelete("{id:guid}/notes/{noteId:guid}")]
+    [HttpDelete("{contactId:guid}/notes/{noteId:guid}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> DeleteNote(Guid id, Guid noteId)
+    public async Task<IActionResult> DeleteNote([FromRoute] Guid contactId, Guid noteId)
     {
-        await _service.RemoveNoteFromPerson(id, noteId);
+        await _service.RemoveNoteFromPerson(contactId, noteId);
         return NoContent();
     }
 }

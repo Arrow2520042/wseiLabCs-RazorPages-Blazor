@@ -45,6 +45,13 @@ public class MemoryPersonService(IContactUnitOfWork unitOfWork, IMapper mapper) 
         return person is not null ? mapper.Map<PersonDto>(person) : null;
     }
 
+    public async Task<PersonDto> GetPerson(Guid personId)
+    {
+        return await GetById(personId)
+               ?? throw new ApplicationCore.Exceptions.ContactNotFoundException(
+                   $"Person with id {personId} was not found.");
+    }
+
     public async Task DeletePersonAsync(Guid id)
     {
         try
@@ -104,10 +111,8 @@ public class MemoryPersonService(IContactUnitOfWork unitOfWork, IMapper mapper) 
 
     public async Task<IEnumerable<NoteDto>> GetNotes(Guid personId)
     {
-        var person = await unitOfWork.Persons.FindByIdAsync(personId)
-                     ?? throw new ApplicationCore.Exceptions.ContactNotFoundException($"Person with id {personId} was not found.");
-
-        return person.Notes.Select(mapper.Map<NoteDto>).ToList();
+        var person = await GetPerson(personId);
+        return person.Notes;
     }
 
     public async Task RemoveNoteFromPerson(Guid personId, Guid noteId)

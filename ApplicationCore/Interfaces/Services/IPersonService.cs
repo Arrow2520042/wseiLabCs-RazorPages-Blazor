@@ -15,6 +15,7 @@ public interface IPersonService
     Task AddTagAsync(Guid id, string tag);
     Task RemoveTagAsync(Guid id, string tag);
     Task<NoteDto> AddNoteToPerson(Guid personId, CreateNoteDto noteDto);
+    Task<PersonDto> GetPerson(Guid personId);
     Task<IEnumerable<NoteDto>> GetNotes(Guid personId);
     Task RemoveNoteFromPerson(Guid personId, Guid noteId);
     Task<PagedResult<PersonDto>> SearchPeople(ContactSearchDto search);

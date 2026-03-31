@@ -1,6 +1,7 @@
 using ApplicationCore.Mapper;
 using ApplicationCore.Validators;
 using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -13,7 +14,8 @@ public static class ContactsModule
         IConfiguration configuration)
     {
         services.AddValidatorsFromAssemblyContaining<CreatePersonDtoValidator>();
-        services.AddAutoMapper(cfg => cfg.AddProfile<ContactsMappingProfile>());
+        services.AddFluentValidationAutoValidation();
+        services.AddAutoMapper(typeof(ContactsMappingProfile).Assembly);
         return services;
     }
 }

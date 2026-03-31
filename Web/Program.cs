@@ -2,7 +2,6 @@ using ApplicationCore.Interfaces;
 using ApplicationCore.Interfaces.Repositories;
 using ApplicationCore.Interfaces.Services;
 using ApplicationCore.Module;
-using FluentValidation.AspNetCore;
 using Infrastructure.Memory;
 using Infrastructure.Memory.Repositories;
 using Infrastructure.Services;
@@ -12,7 +11,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddRazorPages();
 builder.Services.AddControllers();
-builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddAuthorization();
+builder.Services.AddExceptionHandler<ProblemDetailsExceptionHandler>();
+builder.Services.AddProblemDetails();
 
 builder.Services.AddContactsModule(builder.Configuration);
 
@@ -27,13 +28,12 @@ builder.Services.AddSingleton<IPersonService, MemoryPersonService>();
 
 var app = builder.Build();
 
-app.UseMiddleware<ExceptionHandlingMiddleware>();
-
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Error");
     app.UseHsts();
 }
+
+app.UseExceptionHandler();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

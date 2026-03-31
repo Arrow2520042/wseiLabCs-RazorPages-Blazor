@@ -67,4 +67,12 @@ Content-Type: application/json
 POST {{WebApi_HostAddress}}/api/contacts/3d4f9239-3586-433a-bee0-a0858634f8f8/notes
 Content-Type: application/json
 
-"Klient premium, kontakt w sprawie zamówienia #1234"
+{
+  "content": "Klient premium, kontakt w sprawie zamówienia #1234"
+}
+
+###
+
+### Pobierz notatki osoby (wstaw znany guid)
+GET {{WebApi_HostAddress}}/api/contacts/3d4f9239-3586-433a-bee0-a0858634f8f8/notes
+Accept: application/json

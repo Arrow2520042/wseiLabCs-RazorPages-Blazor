@@ -1,13 +1,13 @@
 namespace ApplicationCore.Exceptions;
 
-public class ContactNotFoundException : KeyNotFoundException
+public class ContactNotFoundException : Exception
 {
     public ContactNotFoundException(string message) : base(message)
     {
     }
 }
 
-public class NoteNotFoundException : KeyNotFoundException
+public class NoteNotFoundException : Exception
 {
     public NoteNotFoundException(string message) : base(message)
     {
