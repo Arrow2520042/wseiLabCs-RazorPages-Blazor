@@ -26,7 +26,7 @@ Content-Type: application/json
 
 ###
 
-### Dodaj nową osobę (niepoprawne dane - brak nazwiska)
+### Dodaj nową osobę (brak nazwiska)
 POST {{WebApi_HostAddress}}/api/contacts
 Content-Type: application/json
 
@@ -37,7 +37,7 @@ Content-Type: application/json
 
 ###
 
-### Edytuj osobę (wstaw znany guid)
+### Edytuj osobę 
 PUT {{WebApi_HostAddress}}/api/contacts/2fa4ea0f-4f53-4e49-89da-bc4db57dc57f
 Content-Type: application/json
 
@@ -55,7 +55,7 @@ DELETE {{WebApi_HostAddress}}/api/contacts/aaf31a7c-d6c5-4c38-a845-dcbfdaf95af4
 
 ###
 
-### Dodaj tag do osoby (wstaw znany guid)
+### Dodaj tag do osoby 
 POST {{WebApi_HostAddress}}/api/contacts/25f35276-a294-4d9e-b431-812afca7ba65/tags
 Content-Type: application/json
 
