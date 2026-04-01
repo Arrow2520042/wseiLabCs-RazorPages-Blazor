@@ -16,16 +16,16 @@ public class MemoryGenericRepositoryAsyncTest
         _repo = new MemoryGenericRepositoryAsync<Person>();
         _person1 = new Person
         {
-            FirstName = "Jan",
-            LastName = "Kowalski",
-            Email = "jan@example.com",
+            FirstName = "John",
+            LastName = "Doe",
+            Email = "john.doe@example.com",
             Gender = Gender.Male
         };
         _person2 = new Person
         {
-            FirstName = "Anna",
-            LastName = "Nowak",
-            Email = "anna@example.com",
+            FirstName = "Jane",
+            LastName = "Smith",
+            Email = "jane.smith@example.com",
             Gender = Gender.Female
         };
     }
@@ -39,14 +39,14 @@ public class MemoryGenericRepositoryAsyncTest
 
         Assert.NotNull(found);
         Assert.Equal(added.Id, found.Id);
-        Assert.Equal("Jan", found.FirstName);
-        Assert.Equal("Kowalski", found.LastName);
+        Assert.Equal("John", found.FirstName);
+        Assert.Equal("Doe", found.LastName);
     }
 
     [Fact]
     public async Task AddAssignsGuidWhenEmptyAsync()
     {
-        var person = new Person { FirstName = "Test" };
+        var person = new Person { FirstName = "Random" };
         Assert.Equal(Guid.Empty, person.Id);
 
         var added = await _repo.AddAsync(person);
@@ -63,8 +63,8 @@ public class MemoryGenericRepositoryAsyncTest
         var all = (await _repo.FindAllAsync()).ToList();
 
         Assert.Equal(2, all.Count);
-        Assert.Contains(all, p => p.FirstName == "Jan");
-        Assert.Contains(all, p => p.FirstName == "Anna");
+        Assert.Contains(all, p => p.FirstName == "John");
+        Assert.Contains(all, p => p.FirstName == "Jane");
     }
 
     [Fact]
@@ -99,13 +99,13 @@ public class MemoryGenericRepositoryAsyncTest
     public async Task UpdateReplacesEntityAsync()
     {
         var added = await _repo.AddAsync(_person1);
-        added.FirstName = "Zmodyfikowany";
+        added.FirstName = "Modified";
 
         var updated = await _repo.UpdateAsync(added);
         var found = await _repo.FindByIdAsync(added.Id);
 
-        Assert.Equal("Zmodyfikowany", updated.FirstName);
-        Assert.Equal("Zmodyfikowany", found?.FirstName);
+        Assert.Equal("Modified", updated.FirstName);
+        Assert.Equal("Modified", found?.FirstName);
     }
 
     [Fact]

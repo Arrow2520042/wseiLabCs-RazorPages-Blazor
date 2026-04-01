@@ -7,7 +7,7 @@ Accept: application/json
 ###
 
 ### Pobierz osobę po id 
-GET {{WebApi_HostAddress}}/api/contacts/2fa4ea0f-4f53-4e49-89da-bc4db57dc57f
+GET {{WebApi_HostAddress}}/api/contacts/3a4b5c6d-7e8f-9a0b-c1d2-e3f4g5h6i7j8
 Accept: application/json
 
 ###
@@ -17,10 +17,10 @@ POST {{WebApi_HostAddress}}/api/contacts
 Content-Type: application/json
 
 {
-  "firstName": "Sebastian",
-  "lastName": "Kurek",
-  "email": "sebastian.kurek@wsei.edu.pl",
-  "phone": "+48 666666666",
+  "firstName": "Michael",
+  "lastName": "Clark",
+  "email": "michael.clark@example.com",
+  "phone": "+48 555 555 555",
   "gender": 0
 }
 
@@ -31,21 +31,21 @@ POST {{WebApi_HostAddress}}/api/contacts
 Content-Type: application/json
 
 {
-  "firstName": "Adam",
-  "lastName": "Nowak"
+  "firstName": "Emily",
+  "lastName": "Taylor"
 }
 
 ###
 
 ### Edytuj osobę 
-PUT {{WebApi_HostAddress}}/api/contacts/2fa4ea0f-4f53-4e49-89da-bc4db57dc57f
+PUT {{WebApi_HostAddress}}/api/contacts/3a4b5c6d-7e8f-9a0b-c1d2-e3f4g5h6i7j8
 Content-Type: application/json
 
 {
-  "firstName": "Kacper",
-  "lastName": "Wroblewski",
-  "email": "kacper.wroblewski@wsei.edu.pl",
-  "phone": "+48 699 999 999"
+  "firstName": "Chris",
+  "lastName": "Evans",
+  "email": "chris.evans@example.com",
+  "phone": "+48 444 444 444"
 }
 
 ###

@@ -20,11 +20,11 @@ public class MemoryPersonRepository : MemoryGenericRepositoryAsync<Person>, IPer
             BirthDate = new DateTime(1993, 5, 14),
             Gender = Gender.Male,
             Status = ApplicationCore.Enums.ContactStatus.Active,
-            Tags = ["priority", "b2b"],
-            Notes =
-            [
+            Tags = new List<string> { "priority", "b2b" },
+            Notes = new List<Note>
+            {
                 new Note { Content = "Preferuje kontakt po godzinie 10:00." }
-            ],
+            },
             Address = new Address
             {
                 Street = "ul. Lipowa 12/4",
@@ -47,7 +47,7 @@ public class MemoryPersonRepository : MemoryGenericRepositoryAsync<Person>, IPer
             BirthDate = new DateTime(1989, 11, 3),
             Gender = Gender.Female,
             Status = ApplicationCore.Enums.ContactStatus.Active,
-            Tags = ["hr"],
+            Tags = new List<string> { "hr" },
             Address = new Address
             {
                 Street = "ul. Brzozowa 7",
@@ -70,18 +70,18 @@ public class MemoryPersonRepository : MemoryGenericRepositoryAsync<Person>, IPer
             BirthDate = new DateTime(1996, 2, 28),
             Gender = Gender.Male,
             Status = ApplicationCore.Enums.ContactStatus.Inactive,
-            Tags = ["tech", "legacy"],
-            Notes =
-            [
-                new Note { Content = "Wznowic kontakt w kolejnym kwartale." }
-            ],
+            Tags = new List<string> { "tech", "legacy" },
+            Notes = new List<Note>
+            {
+            new Note { Content = "Wznowic kontakt w kolejnym kwartale." }
+            },
             Address = new Address
             {
-                Street = "ul. Klonowa 2",
-                City = "Poznan",
-                PostalCode = "60-112",
-                Country = "Polska",
-                Type = AddressType.Home
+            Street = "ul. Klonowa 2",
+            City = "Poznan",
+            PostalCode = "60-112",
+            Country = "Polska",
+            Type = AddressType.Home
             }
         });
 
@@ -97,7 +97,7 @@ public class MemoryPersonRepository : MemoryGenericRepositoryAsync<Person>, IPer
             BirthDate = new DateTime(1985, 8, 21),
             Gender = Gender.Female,
             Status = ApplicationCore.Enums.ContactStatus.Active,
-            Tags = ["vip", "sales"],
+            Tags = new List<string> { "vip", "sales" },
             Address = new Address
             {
                 Street = "ul. Miodowa 18",

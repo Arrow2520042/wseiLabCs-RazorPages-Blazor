@@ -34,25 +34,25 @@ public class MemoryPersonServiceTest
     [Fact]
     public async Task AddNoteToPerson_ShouldReturnNoteDto()
     {
-        var person = await _service.AddPerson(new CreatePersonDto("Ewa", "Kowalska", "ewa@example.com", "+48 123 456 789", null, null, ApplicationCore.Enums.Gender.Female, null, null));
+        var person = await _service.AddPerson(new CreatePersonDto("Alice", "Johnson", "alice.johnson@example.com", "+48 987 654 321", null, null, ApplicationCore.Enums.Gender.Female, null, null));
 
-        var note = await _service.AddNoteToPerson(person.Id, new CreateNoteDto("Test note"));
+        var note = await _service.AddNoteToPerson(person.Id, new CreateNoteDto("Sample note"));
 
         Assert.NotNull(note);
-        Assert.Equal("Test note", note.Content);
+        Assert.Equal("Sample note", note.Content);
         var notes = await _service.GetNotes(person.Id);
-        Assert.Contains(notes, n => n.Id == note.Id && n.Content == "Test note");
+        Assert.Contains(notes, n => n.Id == note.Id && n.Content == "Sample note");
     }
 
     [Fact]
     public async Task SearchPeople_ShouldSupportQueryAndPaging()
     {
-        await _service.AddPerson(new CreatePersonDto("Jan", "Nowak", "jan.nowak@example.com", "+48 111 111 111", null, null, ApplicationCore.Enums.Gender.Male, null, null));
-        await _service.AddPerson(new CreatePersonDto("Anna", "Nowak", "anna.nowak@example.com", "+48 222 222 222", null, null, ApplicationCore.Enums.Gender.Female, null, null));
+        await _service.AddPerson(new CreatePersonDto("Bob", "Brown", "bob.brown@example.com", "+48 123 456 789", null, null, ApplicationCore.Enums.Gender.Male, null, null));
+        await _service.AddPerson(new CreatePersonDto("Charlie", "Davis", "charlie.davis@example.com", "+48 321 654 987", null, null, ApplicationCore.Enums.Gender.Male, null, null));
 
-        var result = await _service.SearchPeople(new ContactSearchDto("Anna", null, null, null, 1, 10));
+        var result = await _service.SearchPeople(new ContactSearchDto("Charlie", null, null, null, 1, 10));
 
         Assert.Single(result.Items);
-        Assert.Equal("Anna", result.Items.First().FirstName);
+        Assert.Equal("Charlie", result.Items.First().FirstName);
     }
 }
