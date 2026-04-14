@@ -1,11 +1,6 @@
-using ApplicationCore.Interfaces;
-using ApplicationCore.Interfaces.Repositories;
-using ApplicationCore.Interfaces.Services;
 using ApplicationCore.Module;
-using Infrastructure.Memory;
-using Infrastructure.Memory.Repositories;
-using Infrastructure.Services;
 using BackendLab01.Middleware;
+using Infrastructure.Module;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,16 +10,11 @@ builder.Services.AddAuthorization();
 builder.Services.AddExceptionHandler<ProblemDetailsExceptionHandler>();
 builder.Services.AddProblemDetails();
 
-builder.Services.AddContactsModule(builder.Configuration);
+builder.Services.AddContactsEfModule(builder.Configuration);
+builder.Services.AddContactsCoreModule(builder.Configuration);
 
-// Contact repositories
-builder.Services.AddSingleton<IPersonRepository, MemoryPersonRepository>();
-builder.Services.AddSingleton<ICompanyRepository, MemoryCompanyRepository>();
-builder.Services.AddSingleton<IOrganizationRepository, MemoryOrganizationRepository>();
-
-// Unit of Work and service
-builder.Services.AddSingleton<IContactUnitOfWork, MemoryContactUnitOfWork>();
-builder.Services.AddSingleton<IPersonService, MemoryPersonService>();
+// For switching implementation you can use:
+// builder.Services.AddContactsMemoryModule(builder.Configuration);
 
 var app = builder.Build();
 
@@ -38,6 +28,7 @@ app.UseExceptionHandler();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapRazorPages();
 app.MapControllers();

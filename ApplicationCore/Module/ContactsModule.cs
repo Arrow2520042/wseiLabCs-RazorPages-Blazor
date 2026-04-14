@@ -9,6 +9,13 @@ namespace ApplicationCore.Module;
 
 public static class ContactsModule
 {
+    public static IServiceCollection AddContactsCoreModule(
+        this IServiceCollection services,
+        IConfiguration configuration)
+    {
+        return services.AddContactsModule(configuration);
+    }
+
     public static IServiceCollection AddContactsModule(
         this IServiceCollection services,
         IConfiguration configuration)
