@@ -228,24 +228,45 @@ public class ContactsDbContext : IdentityDbContext<CrmUser, CrmRole, string>
 
     private static void SeedContacts(ModelBuilder builder)
     {
-        var createdAt = new DateTime(2026, 3, 31, 10, 0, 0, DateTimeKind.Utc);
+        var createdAt = new DateTime(2026, 4, 20, 9, 30, 0, DateTimeKind.Utc);
 
-        var companyId = Guid.Parse("516A34D7-CCFB-4F20-85F3-62BD0F3AF271");
-        var person1Id = Guid.Parse("3D54091D-ABC8-49EC-9590-93AD3ED5458F");
-        var person2Id = Guid.Parse("B4DCB17C-F875-43F8-9D66-36597895A466");
+        var companyId = Guid.Parse("8A8ECDE7-0EAA-4E9E-A67F-3AC9857F4E11");
+        var organizationId = Guid.Parse("8A8ECDE7-0EAA-4E9E-A67F-3AC9857F4E12");
+        var person1Id = Guid.Parse("8A8ECDE7-0EAA-4E9E-A67F-3AC9857F4E21");
+        var person2Id = Guid.Parse("8A8ECDE7-0EAA-4E9E-A67F-3AC9857F4E22");
+        var person3Id = Guid.Parse("8A8ECDE7-0EAA-4E9E-A67F-3AC9857F4E23");
 
         builder.Entity<Company>().HasData(
             new Company
             {
                 Id = companyId,
-                Name = "WSEI",
-                Nip = "6750000000",
-                Phone = "123567123",
-                Email = "biuro@wsei.edu.pl",
-                Website = "https://wsei.edu.pl",
+                Name = "Baltic Soft Solutions",
+                Nip = "5842781123",
+                Phone = "583221104",
+                Email = "kontakt@balticsoft.pl",
+                Website = "https://balticsoft.pl",
                 Status = ContactStatus.Active,
                 CreatedAt = createdAt,
-                Tags = new List<string>(),
+                Tags = new List<string> { "b2b", "it", "partner" },
+                Notes = new List<Note>
+                {
+                    new() { Id = Guid.Parse("8A8ECDE7-0EAA-4E9E-A67F-3AC9857F5011"), Content = "Klient strategiczny z Pomorza.", CreatedAt = createdAt }
+                }
+            }
+        );
+
+        builder.Entity<Organization>().HasData(
+            new Organization
+            {
+                Id = organizationId,
+                Name = "Pomorska Izba Cyfrowa",
+                Type = OrganizationType.Other,
+                Description = "Siec wspolpracy firm technologicznych.",
+                Phone = "583004455",
+                Email = "biuro@izbacyfrowa.pl",
+                Status = ContactStatus.Active,
+                CreatedAt = createdAt,
+                Tags = new List<string> { "networking", "wydarzenia" },
                 Notes = new List<Note>()
             }
         );
@@ -254,33 +275,54 @@ public class ContactsDbContext : IdentityDbContext<CrmUser, CrmRole, string>
             new Person
             {
                 Id = person1Id,
-                FirstName = "Adam",
-                LastName = "Nowak",
-                Gender = Gender.Male,
+                FirstName = "Katarzyna",
+                LastName = "Witkowska",
+                Gender = Gender.Female,
                 Status = ContactStatus.Active,
-                Email = "adam@wsei.edu.pl",
-                Phone = "123456789",
-                BirthDate = new DateTime(2001, 1, 11),
-                Position = "Programista",
+                Email = "k.witkowska@balticsoft.pl",
+                Phone = "501778992",
+                BirthDate = new DateTime(1993, 9, 17),
+                Position = "Kierownik Projektu",
                 EmployerId = companyId,
+                OrganizationId = organizationId,
                 CreatedAt = createdAt,
-                Tags = new List<string>(),
-                Notes = new List<Note>()
+                Tags = new List<string> { "decision-maker", "enterprise" },
+                Notes = new List<Note>
+                {
+                    new() { Id = Guid.Parse("8A8ECDE7-0EAA-4E9E-A67F-3AC9857F6011"), Content = "Preferuje kontakt telefoniczny rano.", CreatedAt = createdAt }
+                }
             },
             new Person
             {
                 Id = person2Id,
-                FirstName = "Ewa",
-                LastName = "Kowalska",
-                Gender = Gender.Female,
-                Status = ContactStatus.Blocked,
-                Email = "ewa@wsei.edu.pl",
-                Phone = "123123123",
-                BirthDate = new DateTime(2001, 1, 11),
-                Position = "Tester",
+                FirstName = "Michal",
+                LastName = "Czernecki",
+                Gender = Gender.Male,
+                Status = ContactStatus.Active,
+                Email = "m.czernecki@balticsoft.pl",
+                Phone = "603115870",
+                BirthDate = new DateTime(1990, 2, 11),
+                Position = "Architekt Rozwiazan",
                 EmployerId = companyId,
+                OrganizationId = organizationId,
                 CreatedAt = createdAt,
-                Tags = new List<string>(),
+                Tags = new List<string> { "security", "cloud" },
+                Notes = new List<Note>()
+            },
+            new Person
+            {
+                Id = person3Id,
+                FirstName = "Agnieszka",
+                LastName = "Golebiowska",
+                Gender = Gender.Female,
+                Status = ContactStatus.Inactive,
+                Email = "a.golebiowska@izbacyfrowa.pl",
+                Phone = "509447221",
+                BirthDate = new DateTime(1988, 7, 5),
+                Position = "Koordynator Partnerstw",
+                OrganizationId = organizationId,
+                CreatedAt = createdAt,
+                Tags = new List<string> { "events", "ngo" },
                 Notes = new List<Note>()
             }
         );
@@ -289,20 +331,29 @@ public class ContactsDbContext : IdentityDbContext<CrmUser, CrmRole, string>
             new
             {
                 ContactId = person1Id,
-                Street = "ul. Sw. Filipa 17",
-                City = "Krakow",
-                PostalCode = "25-009",
-                Country = "Poland",
+                Street = "ul. Grunwaldzka 103A",
+                City = "Gdansk",
+                PostalCode = "80-244",
+                Country = "Polska",
                 Type = AddressType.Work
             },
             new
             {
                 ContactId = person2Id,
-                Street = "ul. Dobra 5",
-                City = "Krakow",
-                PostalCode = "30-001",
-                Country = "Poland",
+                Street = "al. Jana Pawla II 28",
+                City = "Warszawa",
+                PostalCode = "00-141",
+                Country = "Polska",
                 Type = AddressType.Home
+            },
+            new
+            {
+                ContactId = person3Id,
+                Street = "ul. Pilsudskiego 14",
+                City = "Lodz",
+                PostalCode = "90-051",
+                Country = "Polska",
+                Type = AddressType.Work
             }
         );
     }

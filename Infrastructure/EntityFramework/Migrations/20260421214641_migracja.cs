@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infrastructure.EntityFramework.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialContactsEf : Migration
+    public partial class migracja : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -239,7 +239,12 @@ namespace Infrastructure.EntityFramework.Migrations
             migrationBuilder.InsertData(
                 table: "Contacts",
                 columns: new[] { "Id", "ContactType", "CreatedAt", "Email", "Name", "Nip", "Notes", "Phone", "Status", "Tags", "Website" },
-                values: new object[] { new Guid("516a34d7-ccfb-4f20-85f3-62bd0f3af271"), "Company", new DateTime(2026, 3, 31, 10, 0, 0, 0, DateTimeKind.Utc), "biuro@wsei.edu.pl", "WSEI", "6750000000", "[]", "123567123", "Active", "[]", "https://wsei.edu.pl" });
+                values: new object[] { new Guid("8a8ecde7-0eaa-4e9e-a67f-3ac9857f4e11"), "Company", new DateTime(2026, 4, 20, 9, 30, 0, 0, DateTimeKind.Utc), "kontakt@balticsoft.pl", "Baltic Soft Solutions", "5842781123", "[{\"Content\":\"Klient strategiczny z Pomorza.\",\"CreatedAt\":\"2026-04-20T09:30:00Z\",\"Id\":\"8a8ecde7-0eaa-4e9e-a67f-3ac9857f5011\"}]", "583221104", "Active", "[\"b2b\",\"it\",\"partner\"]", "https://balticsoft.pl" });
+
+            migrationBuilder.InsertData(
+                table: "Contacts",
+                columns: new[] { "Id", "ContactType", "CreatedAt", "Description", "Email", "Organization_Name", "Notes", "Phone", "Status", "Tags", "Type" },
+                values: new object[] { new Guid("8a8ecde7-0eaa-4e9e-a67f-3ac9857f4e12"), "Organization", new DateTime(2026, 4, 20, 9, 30, 0, 0, DateTimeKind.Utc), "Siec wspolpracy firm technologicznych.", "biuro@izbacyfrowa.pl", "Pomorska Izba Cyfrowa", "[]", "583004455", "Active", "[\"networking\",\"wydarzenia\"]", "Other" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
@@ -255,8 +260,9 @@ namespace Infrastructure.EntityFramework.Migrations
                 columns: new[] { "Id", "Address_City", "Address_Country", "Address_PostalCode", "Address_Street", "Address_Type", "BirthDate", "ContactType", "CreatedAt", "Email", "EmployerId", "FirstName", "Gender", "LastName", "Notes", "OrganizationId", "Phone", "Position", "Status", "Tags" },
                 values: new object[,]
                 {
-                    { new Guid("3d54091d-abc8-49ec-9590-93ad3ed5458f"), "Krakow", "Poland", "25-009", "ul. Sw. Filipa 17", "Work", new DateTime(2001, 1, 11, 0, 0, 0, 0, DateTimeKind.Unspecified), "Person", new DateTime(2026, 3, 31, 10, 0, 0, 0, DateTimeKind.Utc), "adam@wsei.edu.pl", new Guid("516a34d7-ccfb-4f20-85f3-62bd0f3af271"), "Adam", "Male", "Nowak", "[]", null, "123456789", "Programista", "Active", "[]" },
-                    { new Guid("b4dcb17c-f875-43f8-9d66-36597895a466"), "Krakow", "Poland", "30-001", "ul. Dobra 5", "Home", new DateTime(2001, 1, 11, 0, 0, 0, 0, DateTimeKind.Unspecified), "Person", new DateTime(2026, 3, 31, 10, 0, 0, 0, DateTimeKind.Utc), "ewa@wsei.edu.pl", new Guid("516a34d7-ccfb-4f20-85f3-62bd0f3af271"), "Ewa", "Female", "Kowalska", "[]", null, "123123123", "Tester", "Blocked", "[]" }
+                    { new Guid("8a8ecde7-0eaa-4e9e-a67f-3ac9857f4e21"), "Gdansk", "Polska", "80-244", "ul. Grunwaldzka 103A", "Work", new DateTime(1993, 9, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Person", new DateTime(2026, 4, 20, 9, 30, 0, 0, DateTimeKind.Utc), "k.witkowska@balticsoft.pl", new Guid("8a8ecde7-0eaa-4e9e-a67f-3ac9857f4e11"), "Katarzyna", "Female", "Witkowska", "[{\"Content\":\"Preferuje kontakt telefoniczny rano.\",\"CreatedAt\":\"2026-04-20T09:30:00Z\",\"Id\":\"8a8ecde7-0eaa-4e9e-a67f-3ac9857f6011\"}]", new Guid("8a8ecde7-0eaa-4e9e-a67f-3ac9857f4e12"), "501778992", "Kierownik Projektu", "Active", "[\"decision-maker\",\"enterprise\"]" },
+                    { new Guid("8a8ecde7-0eaa-4e9e-a67f-3ac9857f4e22"), "Warszawa", "Polska", "00-141", "al. Jana Pawla II 28", "Home", new DateTime(1990, 2, 11, 0, 0, 0, 0, DateTimeKind.Unspecified), "Person", new DateTime(2026, 4, 20, 9, 30, 0, 0, DateTimeKind.Utc), "m.czernecki@balticsoft.pl", new Guid("8a8ecde7-0eaa-4e9e-a67f-3ac9857f4e11"), "Michal", "Male", "Czernecki", "[]", new Guid("8a8ecde7-0eaa-4e9e-a67f-3ac9857f4e12"), "603115870", "Architekt Rozwiazan", "Active", "[\"security\",\"cloud\"]" },
+                    { new Guid("8a8ecde7-0eaa-4e9e-a67f-3ac9857f4e23"), "Lodz", "Polska", "90-051", "ul. Pilsudskiego 14", "Work", new DateTime(1988, 7, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "Person", new DateTime(2026, 4, 20, 9, 30, 0, 0, DateTimeKind.Utc), "a.golebiowska@izbacyfrowa.pl", null, "Agnieszka", "Female", "Golebiowska", "[]", new Guid("8a8ecde7-0eaa-4e9e-a67f-3ac9857f4e12"), "509447221", "Koordynator Partnerstw", "Inactive", "[\"events\",\"ngo\"]" }
                 });
 
             migrationBuilder.CreateIndex(

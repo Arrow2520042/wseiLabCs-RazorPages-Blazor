@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.EntityFramework.Migrations
 {
     [DbContext(typeof(ContactsDbContext))]
-    [Migration("20260414213641_InitialContactsEf")]
-    partial class InitialContactsEf
+    [Migration("20260421214641_migracja")]
+    partial class migracja
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -417,16 +417,16 @@ namespace Infrastructure.EntityFramework.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("516a34d7-ccfb-4f20-85f3-62bd0f3af271"),
-                            CreatedAt = new DateTime(2026, 3, 31, 10, 0, 0, 0, DateTimeKind.Utc),
-                            Email = "biuro@wsei.edu.pl",
-                            Notes = "[]",
-                            Phone = "123567123",
+                            Id = new Guid("8a8ecde7-0eaa-4e9e-a67f-3ac9857f4e11"),
+                            CreatedAt = new DateTime(2026, 4, 20, 9, 30, 0, 0, DateTimeKind.Utc),
+                            Email = "kontakt@balticsoft.pl",
+                            Notes = "[{\"Content\":\"Klient strategiczny z Pomorza.\",\"CreatedAt\":\"2026-04-20T09:30:00Z\",\"Id\":\"8a8ecde7-0eaa-4e9e-a67f-3ac9857f5011\"}]",
+                            Phone = "583221104",
                             Status = "Active",
-                            Tags = "[]",
-                            Name = "WSEI",
-                            Nip = "6750000000",
-                            Website = "https://wsei.edu.pl"
+                            Tags = "[\"b2b\",\"it\",\"partner\"]",
+                            Name = "Baltic Soft Solutions",
+                            Nip = "5842781123",
+                            Website = "https://balticsoft.pl"
                         });
                 });
 
@@ -455,6 +455,21 @@ namespace Infrastructure.EntityFramework.Migrations
                         });
 
                     b.HasDiscriminator().HasValue("Organization");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("8a8ecde7-0eaa-4e9e-a67f-3ac9857f4e12"),
+                            CreatedAt = new DateTime(2026, 4, 20, 9, 30, 0, 0, DateTimeKind.Utc),
+                            Email = "biuro@izbacyfrowa.pl",
+                            Notes = "[]",
+                            Phone = "583004455",
+                            Status = "Active",
+                            Tags = "[\"networking\",\"wydarzenia\"]",
+                            Description = "Siec wspolpracy firm technologicznych.",
+                            Name = "Pomorska Izba Cyfrowa",
+                            Type = "Other"
+                        });
                 });
 
             modelBuilder.Entity("ApplicationCore.Models.ContactAggregate.Person", b =>
@@ -498,35 +513,53 @@ namespace Infrastructure.EntityFramework.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("3d54091d-abc8-49ec-9590-93ad3ed5458f"),
-                            CreatedAt = new DateTime(2026, 3, 31, 10, 0, 0, 0, DateTimeKind.Utc),
-                            Email = "adam@wsei.edu.pl",
-                            Notes = "[]",
-                            Phone = "123456789",
+                            Id = new Guid("8a8ecde7-0eaa-4e9e-a67f-3ac9857f4e21"),
+                            CreatedAt = new DateTime(2026, 4, 20, 9, 30, 0, 0, DateTimeKind.Utc),
+                            Email = "k.witkowska@balticsoft.pl",
+                            Notes = "[{\"Content\":\"Preferuje kontakt telefoniczny rano.\",\"CreatedAt\":\"2026-04-20T09:30:00Z\",\"Id\":\"8a8ecde7-0eaa-4e9e-a67f-3ac9857f6011\"}]",
+                            Phone = "501778992",
                             Status = "Active",
-                            Tags = "[]",
-                            BirthDate = new DateTime(2001, 1, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EmployerId = new Guid("516a34d7-ccfb-4f20-85f3-62bd0f3af271"),
-                            FirstName = "Adam",
-                            Gender = "Male",
-                            LastName = "Nowak",
-                            Position = "Programista"
+                            Tags = "[\"decision-maker\",\"enterprise\"]",
+                            BirthDate = new DateTime(1993, 9, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EmployerId = new Guid("8a8ecde7-0eaa-4e9e-a67f-3ac9857f4e11"),
+                            FirstName = "Katarzyna",
+                            Gender = "Female",
+                            LastName = "Witkowska",
+                            OrganizationId = new Guid("8a8ecde7-0eaa-4e9e-a67f-3ac9857f4e12"),
+                            Position = "Kierownik Projektu"
                         },
                         new
                         {
-                            Id = new Guid("b4dcb17c-f875-43f8-9d66-36597895a466"),
-                            CreatedAt = new DateTime(2026, 3, 31, 10, 0, 0, 0, DateTimeKind.Utc),
-                            Email = "ewa@wsei.edu.pl",
+                            Id = new Guid("8a8ecde7-0eaa-4e9e-a67f-3ac9857f4e22"),
+                            CreatedAt = new DateTime(2026, 4, 20, 9, 30, 0, 0, DateTimeKind.Utc),
+                            Email = "m.czernecki@balticsoft.pl",
                             Notes = "[]",
-                            Phone = "123123123",
-                            Status = "Blocked",
-                            Tags = "[]",
-                            BirthDate = new DateTime(2001, 1, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EmployerId = new Guid("516a34d7-ccfb-4f20-85f3-62bd0f3af271"),
-                            FirstName = "Ewa",
+                            Phone = "603115870",
+                            Status = "Active",
+                            Tags = "[\"security\",\"cloud\"]",
+                            BirthDate = new DateTime(1990, 2, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EmployerId = new Guid("8a8ecde7-0eaa-4e9e-a67f-3ac9857f4e11"),
+                            FirstName = "Michal",
+                            Gender = "Male",
+                            LastName = "Czernecki",
+                            OrganizationId = new Guid("8a8ecde7-0eaa-4e9e-a67f-3ac9857f4e12"),
+                            Position = "Architekt Rozwiazan"
+                        },
+                        new
+                        {
+                            Id = new Guid("8a8ecde7-0eaa-4e9e-a67f-3ac9857f4e23"),
+                            CreatedAt = new DateTime(2026, 4, 20, 9, 30, 0, 0, DateTimeKind.Utc),
+                            Email = "a.golebiowska@izbacyfrowa.pl",
+                            Notes = "[]",
+                            Phone = "509447221",
+                            Status = "Inactive",
+                            Tags = "[\"events\",\"ngo\"]",
+                            BirthDate = new DateTime(1988, 7, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FirstName = "Agnieszka",
                             Gender = "Female",
-                            LastName = "Kowalska",
-                            Position = "Tester"
+                            LastName = "Golebiowska",
+                            OrganizationId = new Guid("8a8ecde7-0eaa-4e9e-a67f-3ac9857f4e12"),
+                            Position = "Koordynator Partnerstw"
                         });
                 });
 
@@ -572,21 +605,30 @@ namespace Infrastructure.EntityFramework.Migrations
                             b1.HasData(
                                 new
                                 {
-                                    ContactId = new Guid("3d54091d-abc8-49ec-9590-93ad3ed5458f"),
-                                    City = "Krakow",
-                                    Country = "Poland",
-                                    PostalCode = "25-009",
-                                    Street = "ul. Sw. Filipa 17",
+                                    ContactId = new Guid("8a8ecde7-0eaa-4e9e-a67f-3ac9857f4e21"),
+                                    City = "Gdansk",
+                                    Country = "Polska",
+                                    PostalCode = "80-244",
+                                    Street = "ul. Grunwaldzka 103A",
                                     Type = "Work"
                                 },
                                 new
                                 {
-                                    ContactId = new Guid("b4dcb17c-f875-43f8-9d66-36597895a466"),
-                                    City = "Krakow",
-                                    Country = "Poland",
-                                    PostalCode = "30-001",
-                                    Street = "ul. Dobra 5",
+                                    ContactId = new Guid("8a8ecde7-0eaa-4e9e-a67f-3ac9857f4e22"),
+                                    City = "Warszawa",
+                                    Country = "Polska",
+                                    PostalCode = "00-141",
+                                    Street = "al. Jana Pawla II 28",
                                     Type = "Home"
+                                },
+                                new
+                                {
+                                    ContactId = new Guid("8a8ecde7-0eaa-4e9e-a67f-3ac9857f4e23"),
+                                    City = "Lodz",
+                                    Country = "Polska",
+                                    PostalCode = "90-051",
+                                    Street = "ul. Pilsudskiego 14",
+                                    Type = "Work"
                                 });
                         });
 
