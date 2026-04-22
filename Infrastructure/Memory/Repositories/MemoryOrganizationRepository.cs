@@ -14,6 +14,8 @@ public class MemoryOrganizationRepository : MemoryGenericRepositoryAsync<Organiz
 
     public Task<IEnumerable<Person>> FindMembersAsync(Guid organizationId)
     {
-        throw new NotImplementedException();
+        var organization = _data.Values.FirstOrDefault(o => o.Id == organizationId);
+        var members = organization?.Members ?? new List<Person>();
+        return Task.FromResult<IEnumerable<Person>>(members);
     }
 }

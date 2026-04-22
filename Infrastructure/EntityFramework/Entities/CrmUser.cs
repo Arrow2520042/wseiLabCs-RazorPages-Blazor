@@ -35,4 +35,9 @@ public class CrmUser : IdentityUser, ISystemUser
             DeactivatedAt = now;
         }
     }
+
+    public void RegisterLogin(DateTime now)
+    {
+        LastLoginAt = now;
+    }
 }

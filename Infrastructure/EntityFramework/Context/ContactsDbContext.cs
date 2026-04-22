@@ -2,6 +2,7 @@ using System.Text.Json;
 using ApplicationCore.Enums;
 using ApplicationCore.Models.ContactAggregate;
 using Infrastructure.EntityFramework.Entities;
+using Infrastructure.Security;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +17,7 @@ public class ContactsDbContext : IdentityDbContext<CrmUser, CrmRole, string>
     public DbSet<Person> People { get; set; } = null!;
     public DbSet<Company> Companies { get; set; } = null!;
     public DbSet<Organization> Organizations { get; set; } = null!;
+    public DbSet<RefreshToken> RefreshTokens { get; set; } = null!;
 
     public ContactsDbContext()
     {
@@ -39,6 +41,7 @@ public class ContactsDbContext : IdentityDbContext<CrmUser, CrmRole, string>
         base.OnModelCreating(builder);
 
         ConfigureIdentity(builder);
+        ConfigureSecurity(builder);
         ConfigureContacts(builder);
         SeedIdentity(builder);
         SeedContacts(builder);
@@ -60,6 +63,31 @@ public class ContactsDbContext : IdentityDbContext<CrmUser, CrmRole, string>
         builder.Entity<CrmRole>(entity =>
         {
             entity.Property(r => r.Name).HasMaxLength(30);
+        });
+    }
+
+    private static void ConfigureSecurity(ModelBuilder builder)
+    {
+        builder.Entity<RefreshToken>(entity =>
+        {
+            entity.ToTable("RefresTokens");
+            entity.HasKey(x => x.Id);
+
+            entity.Property(x => x.UserId)
+                .IsRequired()
+                .HasMaxLength(450);
+
+            entity.Property(x => x.Token)
+                .IsRequired()
+                .HasMaxLength(512);
+
+            entity.HasIndex(x => x.UserId);
+            entity.HasIndex(x => x.Token).IsUnique();
+
+            entity.HasOne<CrmUser>()
+                .WithMany()
+                .HasForeignKey(x => x.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
         });
     }
 
@@ -198,6 +226,8 @@ public class ContactsDbContext : IdentityDbContext<CrmUser, CrmRole, string>
                 Department = "IT",
                 Status = SystemUserStatus.Active,
                 CreatedAt = createdAt,
+                PasswordHash = "AQAAAAIAAYagAAAAEIUGp/TT1NcVE8M77dDN1R49jG6hYMnAlyOzNFVZsFbxYLXF7djmW9FsFcIh1UyZ5A==",
+                LockoutEnabled = true,
                 SecurityStamp = "SEC-CRM-ADMIN-001",
                 ConcurrencyStamp = "CON-CRM-ADMIN-001"
             },
@@ -215,6 +245,8 @@ public class ContactsDbContext : IdentityDbContext<CrmUser, CrmRole, string>
                 Department = "Sales",
                 Status = SystemUserStatus.Active,
                 CreatedAt = createdAt,
+                PasswordHash = "AQAAAAIAAYagAAAAEMDVL814x0HYV8B6rILlR6sZjGfiS7H/0kQZNVMeYfsLd0pg/nFCQmr7/8zlW6NaEw==",
+                LockoutEnabled = true,
                 SecurityStamp = "SEC-CRM-SALES-001",
                 ConcurrencyStamp = "CON-CRM-SALES-001"
             }

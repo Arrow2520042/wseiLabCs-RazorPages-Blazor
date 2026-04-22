@@ -3,6 +3,7 @@ using System;
 using Infrastructure.EntityFramework.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.EntityFramework.Migrations
 {
     [DbContext(typeof(ContactsDbContext))]
-    partial class ContactsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260421215321_AddRefreshTokensTable")]
+    partial class AddRefreshTokensTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.14");
@@ -242,10 +245,9 @@ namespace Infrastructure.EntityFramework.Migrations
                             FirstName = "System",
                             FullName = "System Admin",
                             LastName = "Admin",
-                            LockoutEnabled = true,
+                            LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@WSEI.EDU.PL",
                             NormalizedUserName = "ADMIN@WSEI.EDU.PL",
-                            PasswordHash = "AQAAAAIAAYagAAAAEIUGp/TT1NcVE8M77dDN1R49jG6hYMnAlyOzNFVZsFbxYLXF7djmW9FsFcIh1UyZ5A==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "SEC-CRM-ADMIN-001",
                             Status = "Active",
@@ -264,10 +266,9 @@ namespace Infrastructure.EntityFramework.Migrations
                             FirstName = "Sales",
                             FullName = "Sales Manager",
                             LastName = "Manager",
-                            LockoutEnabled = true,
+                            LockoutEnabled = false,
                             NormalizedEmail = "SALES@WSEI.EDU.PL",
                             NormalizedUserName = "SALES@WSEI.EDU.PL",
-                            PasswordHash = "AQAAAAIAAYagAAAAEMDVL814x0HYV8B6rILlR6sZjGfiS7H/0kQZNVMeYfsLd0pg/nFCQmr7/8zlW6NaEw==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "SEC-CRM-SALES-001",
                             Status = "Active",
@@ -311,7 +312,7 @@ namespace Infrastructure.EntityFramework.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("RefresTokens", (string)null);
+                    b.ToTable("RefresTokens");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

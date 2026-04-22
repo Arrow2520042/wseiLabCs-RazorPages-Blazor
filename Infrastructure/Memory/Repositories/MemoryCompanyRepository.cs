@@ -20,6 +20,8 @@ public class MemoryCompanyRepository : MemoryGenericRepositoryAsync<Company>, IC
 
     public Task<IEnumerable<Person>> FindEmployeesAsync(Guid companyId)
     {
-        throw new NotImplementedException();
+        var company = _data.Values.FirstOrDefault(c => c.Id == companyId);
+        var employees = company?.Employees ?? new List<Person>();
+        return Task.FromResult<IEnumerable<Person>>(employees);
     }
 }
