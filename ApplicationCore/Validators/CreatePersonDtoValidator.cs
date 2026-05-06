@@ -1,5 +1,5 @@
 using ApplicationCore.Dto;
-using ApplicationCore.Interfaces.Repositories;
+using ApplicationCore.Interfaces;
 using ApplicationCore.Validators.Shared;
 using FluentValidation;
 
@@ -26,10 +26,10 @@ public class CreatePersonDtoValidator : AbstractValidator<CreatePersonDto>
         RuleFor(x => x.Email)
             .NotEmpty().WithMessage("Email jest wymagany.")
             .EmailAddress().WithMessage("Nieprawidłowy format adresu email.")
-            .MaximumLength(200);
+            .MaximumLength(200).WithMessage("Email nie może przekraczać 200 znaków.");
 
         RuleFor(x => x.Phone)
-            .Matches(@"^\+?[\d\s\-\(\)]{9,20}$")
+            .Matches(@"^(\+?[\d\s\-().]{7,20})$")
                 .WithMessage("Nieprawidłowy format numeru telefonu.")
             .When(x => x.Phone is not null);
 
@@ -50,8 +50,8 @@ public class CreatePersonDtoValidator : AbstractValidator<CreatePersonDto>
             .When(x => x.EmployerId.HasValue);
 
         RuleFor(x => x.Address)
-            .SetValidator(new AddressDtoValidator()!)
-            .When(x => x.Address is not null);
+            .NotNull().WithMessage("Adres jest wymagany.")
+            .SetValidator(new AddressDtoValidator()!);
     }
 
     private async Task<bool> EmployerExistsAsync(Guid? employerId, CancellationToken ct) =>

@@ -17,7 +17,7 @@ public class AddressDtoValidator : AbstractValidator<AddressDto>
 
         RuleFor(x => x.PostalCode)
             .NotEmpty().WithMessage("Kod pocztowy jest wymagany.")
-            .Matches(@"^\d{2}-\d{3}$").WithMessage("Nieprawidłowy format kodu pocztowego. Oczekiwany format: xx-xxx.");
+            .Matches(@"^\d{2}-\d{3}$").WithMessage("Nieprawidłowy format kodu pocztowego (wymagany format: xx-xxx).");
 
         RuleFor(x => x.Country)
             .NotEmpty().WithMessage("Kraj jest wymagany.")

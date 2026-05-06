@@ -1,96 +1,65 @@
-using ApplicationCore.Enums;
-using ApplicationCore.Models.ContactAggregate;
+using System;
+using System.Linq;
+using ApplicationCore.Models;
 
 namespace ApplicationCore.Dto;
 
 public record PersonDto : ContactBaseDto
 {
-    public string FirstName { get; init; } = string.Empty;
-    public string LastName { get; init; } = string.Empty;
-    public string FullName { get; init; } = string.Empty;
+    public string FirstName { get; init; }
+    public string LastName { get; init; }
     public string? Position { get; init; }
     public DateTime? BirthDate { get; init; }
     public Gender Gender { get; init; }
     public Guid? EmployerId { get; init; }
-    public string? EmployerName { get; init; }
+    public Guid? OrganizationId { get; init; }
 
     public static PersonDto FromEntity(Person person) => new()
     {
         Id = person.Id,
         FirstName = person.FirstName,
         LastName = person.LastName,
-        FullName = $"{person.FirstName} {person.LastName}",
         Email = person.Email,
         Phone = person.Phone,
         Position = person.Position,
         BirthDate = person.BirthDate,
         Gender = person.Gender,
-        EmployerId = person.EmployerId,
-        EmployerName = person.Employer?.Name,
+        EmployerId = person.Employer?.Id,
+        OrganizationId = person.Organization?.Id,
         Status = person.Status,
-        Tags = person.Tags,
-        Notes = person.Notes.Select(NoteDto.FromEntity).ToList(),
+        Tags = person.Tags.Select(t => t.Name).ToList(),
+        Notes = person.Notes,
         CreatedAt = person.CreatedAt,
-        Address = person.Address is not null ? AddressDto.FromEntity(person.Address) : null
+        Address = MapAddress(person.Address)
     };
 
-    public static implicit operator PersonDto(Person person) => FromEntity(person);
-}
-
-public record CreatePersonDto(
-    string FirstName,
-    string LastName,
-    string Email,
-    string Phone,
-    string? Position,
-    DateTime? BirthDate,
-    Gender Gender,
-    Guid? EmployerId,
-    AddressDto? Address
-)
-{
-    public Person ToEntity() => new()
+    public static Person ToEntity(CreatePersonDto dto) => new()
     {
         Id = Guid.NewGuid(),
-        FirstName = FirstName,
-        LastName = LastName,
-        Email = Email,
-        Phone = Phone,
-        Position = Position,
-        BirthDate = BirthDate,
-        Gender = Gender,
-        EmployerId = EmployerId,
-        Address = Address?.ToEntity(),
-        CreatedAt = DateTime.UtcNow
+        FirstName = dto.FirstName,
+        LastName = dto.LastName,
+        Email = dto.Email,
+        Phone = dto.Phone,
+        Position = dto.Position,
+        BirthDate = dto.BirthDate,
+        Gender = dto.Gender,
+        CreatedAt = DateTime.UtcNow,
+        Status = ContactStatus.Active,
+        Address = MapAddress(dto.Address)
     };
 
-    public static explicit operator Person(CreatePersonDto dto) => dto.ToEntity();
-}
-
-public record UpdatePersonDto(
-    string? FirstName,
-    string? LastName,
-    string? Email,
-    string? Phone,
-    string? Position,
-    DateTime? BirthDate,
-    Gender? Gender,
-    Guid? EmployerId,
-    AddressDto? Address,
-    ContactStatus? Status
-)
-{
-    public void ApplyTo(Person person)
+    public static Person ApplyUpdate(Person person, UpdatePersonDto dto)
     {
-        if (FirstName is not null) person.FirstName = FirstName;
-        if (LastName is not null) person.LastName = LastName;
-        if (Email is not null) person.Email = Email;
-        if (Phone is not null) person.Phone = Phone;
-        if (Position is not null) person.Position = Position;
-        if (BirthDate is not null) person.BirthDate = BirthDate;
-        if (Gender is not null) person.Gender = Gender.Value;
-        if (EmployerId is not null) person.EmployerId = EmployerId;
-        if (Address is not null) person.Address = Address.ToEntity();
-        if (Status is not null) person.Status = Status.Value;
+        if (dto.FirstName is not null) person.FirstName = dto.FirstName;
+        if (dto.LastName is not null) person.LastName = dto.LastName;
+        if (dto.Email is not null) person.Email = dto.Email;
+        if (dto.Phone is not null) person.Phone = dto.Phone;
+        if (dto.Position is not null) person.Position = dto.Position;
+        if (dto.BirthDate is not null) person.BirthDate = dto.BirthDate;
+        if (dto.Gender is not null) person.Gender = dto.Gender.Value;
+        if (dto.Status is not null) person.Status = dto.Status.Value;
+        if (dto.Address is not null) person.Address = MapAddress(dto.Address);
+        person.UpdatedAt = DateTime.UtcNow;
+        return person;
     }
-};
+}

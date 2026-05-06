@@ -1,27 +1,17 @@
+using System.Threading.Tasks;
 using ApplicationCore.Interfaces;
-using ApplicationCore.Interfaces.Repositories;
 
 namespace Infrastructure.Memory;
 
-public class MemoryContactUnitOfWork : IContactUnitOfWork
+public class MemoryContactUnitOfWork(
+    IPersonRepository persons,
+    ICompanyRepository companies,
+    IOrganizationRepository organizations
+) : IContactUnitOfWork
 {
-    private readonly IPersonRepository _persons;
-    private readonly ICompanyRepository _companies;
-    private readonly IOrganizationRepository _organizations;
-
-    public MemoryContactUnitOfWork(
-        IPersonRepository persons,
-        ICompanyRepository companies,
-        IOrganizationRepository organizations)
-    {
-        _persons = persons;
-        _companies = companies;
-        _organizations = organizations;
-    }
-
-    public IPersonRepository Persons => _persons;
-    public ICompanyRepository Companies => _companies;
-    public IOrganizationRepository Organizations => _organizations;
+    public IPersonRepository Persons => persons;
+    public ICompanyRepository Companies => companies;
+    public IOrganizationRepository Organizations => organizations;
 
     public ValueTask DisposeAsync() => ValueTask.CompletedTask;
 

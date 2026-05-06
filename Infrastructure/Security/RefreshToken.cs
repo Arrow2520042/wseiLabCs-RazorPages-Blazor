@@ -1,10 +1,12 @@
+using System;
+
 namespace Infrastructure.Security;
 
 public class RefreshToken
 {
     public Guid Id { get; init; } = Guid.NewGuid();
 
-    // Link to Identity user
+    // Powiązanie z użytkownikiem
     public string UserId { get; init; } = string.Empty;
 
     public string Token { get; init; } = string.Empty;
@@ -19,7 +21,7 @@ public class RefreshToken
 
     public void Revoke(string? replacedByToken = null)
     {
-        RevokedAt = DateTime.UtcNow;
-        ReplacedByToken = replacedByToken;
+        RevokedAt        = DateTime.UtcNow;
+        ReplacedByToken  = replacedByToken;
     }
 }

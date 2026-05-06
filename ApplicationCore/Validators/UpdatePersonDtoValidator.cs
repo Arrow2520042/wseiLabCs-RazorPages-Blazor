@@ -1,5 +1,5 @@
 using ApplicationCore.Dto;
-using ApplicationCore.Interfaces.Repositories;
+using ApplicationCore.Interfaces;
 using ApplicationCore.Validators.Shared;
 using FluentValidation;
 
@@ -25,11 +25,11 @@ public class UpdatePersonDtoValidator : AbstractValidator<UpdatePersonDto>
 
         RuleFor(x => x.Email)
             .EmailAddress().WithMessage("Nieprawidłowy format adresu email.")
-            .MaximumLength(200)
+            .MaximumLength(200).WithMessage("Email nie może przekraczać 200 znaków.")
             .When(x => x.Email is not null);
 
         RuleFor(x => x.Phone)
-            .Matches(@"^\+?[\d\s\-\(\)]{9,20}$")
+            .Matches(@"^(\+?[\d\s\-().]{7,20})$")
                 .WithMessage("Nieprawidłowy format numeru telefonu.")
             .When(x => x.Phone is not null);
 
@@ -45,6 +45,11 @@ public class UpdatePersonDtoValidator : AbstractValidator<UpdatePersonDto>
                 .WithMessage("Nieprawidłowa wartość płci.")
             .When(x => x.Gender.HasValue);
 
+        RuleFor(x => x.Status)
+            .IsInEnum()
+                .WithMessage("Nieprawidłowa wartość statusu.")
+            .When(x => x.Status.HasValue);
+
         RuleFor(x => x.EmployerId)
             .MustAsync(EmployerExistsAsync)
                 .WithMessage("Wskazana firma nie istnieje.")
@@ -53,10 +58,6 @@ public class UpdatePersonDtoValidator : AbstractValidator<UpdatePersonDto>
         RuleFor(x => x.Address)
             .SetValidator(new AddressDtoValidator()!)
             .When(x => x.Address is not null);
-
-        RuleFor(x => x.Status)
-            .IsInEnum().WithMessage("Nieprawidłowy status kontaktu.")
-            .When(x => x.Status.HasValue);
     }
 
     private async Task<bool> EmployerExistsAsync(Guid? employerId, CancellationToken ct) =>

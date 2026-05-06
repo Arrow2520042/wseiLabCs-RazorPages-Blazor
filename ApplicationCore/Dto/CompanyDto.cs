@@ -1,29 +1,23 @@
-using ApplicationCore.Enums;
+using ApplicationCore.Models;
 
 namespace ApplicationCore.Dto;
 
 public record CompanyDto : ContactBaseDto
 {
-    public string Name { get; init; } = string.Empty;
-    public string Nip { get; init; } = string.Empty;
-    public string? Website { get; init; }
+    public string Name { get; init; }
+    public string Industry { get; init; }
+    public string Website { get; init; }
+
+    public static CompanyDto FromEntity(Company company) => new()
+    {
+        Id = company.Id,
+        Name = company.Name,
+        Industry = company.Industry,
+        Website = company.Website,
+        Email = company.Email,
+        Phone = company.Phone,
+        Status = company.Status,
+        CreatedAt = company.CreatedAt,
+        Address = MapAddress(company.Address)
+    };
 }
-
-public record CreateCompanyDto(
-    string Name,
-    string Nip,
-    string Email,
-    string Phone,
-    string? Website,
-    AddressDto? Address
-);
-
-public record UpdateCompanyDto(
-    string? Name,
-    string? Nip,
-    string? Email,
-    string? Phone,
-    string? Website,
-    AddressDto? Address,
-    ContactStatus? Status
-);

@@ -1,4 +1,5 @@
-using ApplicationCore.Enums;
+using System;
+
 namespace ApplicationCore.Interfaces;
 
 public interface ISystemUser
@@ -11,4 +12,21 @@ public interface ISystemUser
     string Department { get; }
     SystemUserStatus Status { get; }
     DateTime CreatedAt { get; }
+}
+
+public enum SystemUserStatus
+{
+    Active,
+    Inactive,
+    Locked,
+    PendingActivation
+}
+
+public enum UserRole
+{
+    Administrator,
+    SalesManager,
+    Salesperson,
+    SupportAgent,
+    ReadOnly
 }
